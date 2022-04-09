@@ -4,8 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-install = "*"
+django = "*"
 djangorestframework = "*"
+environs = "*"
+psycopg2-binary = "*"
+coverage = "*"
+django-filter = "*"
+django-extensions = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 
