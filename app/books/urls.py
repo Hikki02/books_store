@@ -16,9 +16,10 @@ Including another URLconf
 
 
 from django.contrib import admin
+
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
-
+from django.urls import re_path as url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +27,7 @@ urlpatterns = [
     path('', include('store.urls')),
 
     #  social oauth
-    path('', include('social_django.urls', namespace='social'))
+    url('', include('social_django.urls', namespace='social')),
 ]
 
 

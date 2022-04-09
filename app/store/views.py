@@ -1,6 +1,6 @@
-
-
+from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework.filters import OrderingFilter
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
@@ -15,3 +15,7 @@ class BookViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['name', 'price', 'author_name', ]
     ordering_fields = ['price', 'name', ]
+
+
+def oauth(request):
+    return render(request, 'oauth.html')
