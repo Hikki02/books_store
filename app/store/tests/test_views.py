@@ -13,7 +13,8 @@ class BooksApiTestCase(APITestCase):
 
     def setUp(self) -> None:
         self.user = User.objects.create(username="test_username")
-        self.book1 = Book.objects.create(name='test book', price=10, author_name='author_name 1')
+        self.book1 = Book.objects.create(name='test book', price=10, author_name='author_name 1',
+                                         owner=self.user)
         self.book2 = Book.objects.create(name='test book 2', price=20, author_name='author_name 1')
         self.book3 = Book.objects.create(name='test book', price=30, author_name='author_name 1')
 
@@ -46,6 +47,7 @@ class BooksApiTestCase(APITestCase):
         response = self.client.post(url, data=json_data,
                                     content_type='application/json', )
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+        self.assertEqual(self.user, Book.objects.last().owner)
 
     def test_update(self):
         url = reverse('book-detail', args=(self.book1.id, ))
@@ -57,5 +59,23 @@ class BooksApiTestCase(APITestCase):
         self.client.force_login(self.user)
         json_data = json.dumps(data)
         response = self.client.put(url, data=json_data,
-                                    content_type='application/json', )
+                                   content_type='application/json', )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.book1.refresh_from_db()
+        self.assertEqual(290, self.book1.price)
+
+    def test_update_not_owner(self):
+        self.user2 = User.objects.create(username="test_username2")
+        url = reverse('book-detail', args=(self.book1.id,))
+        data = {
+            "name": self.book1.name,
+            "price": 290,
+            "author_name": self.book1.author_name,
+        }
+        self.client.force_login(self.user2)
+        json_data = json.dumps(data)
+        response = self.client.put(url, data=json_data,
+                                   content_type='application/json', )
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+        self.book1.refresh_from_db()
+        self.assertEqual(10, self.book1.price)
