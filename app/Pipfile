@@ -12,6 +12,7 @@ coverage = "*"
 django-filter = "*"
 django-extensions = "*"
 social-auth-app-django = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 
