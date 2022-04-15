@@ -17,6 +17,14 @@ from environs import Env
 env = Env()
 env.read_env()
 
+# from os import path, environ
+# from sys import path as sys_path
+# from django import setup
+#
+# sys_path.append('app.books.settings')
+# environ.setdefault('DJANGO_SETTINGS_MODULE', 'books.settings')
+# setup()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
