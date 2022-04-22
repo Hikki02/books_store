@@ -56,7 +56,7 @@ class BookSerializerTestCase(TestCase):
                 'author_name': 'Author 2',
                 'annotated_likes': 2,
                 'rating': '3.00',
-                'owner_name': '',
+                'owner_name': '2',
                 'readers': [
                     {
                         "first_name": "adilet",
